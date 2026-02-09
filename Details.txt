@@ -12,3 +12,10 @@ Above link contains all the status codes
 
 API Endpoints are set of protocols which defines how a client can request data to server 
 Endpoints are accessed using HTTP methods like PUT,POST,GET.These methodsn indicate what actions the client is going to take
+
+ShouldBindBodyWithJSON(&blog) -> gin will take a look at incoming request and save in that variable
+Clients need to data in the given format
+
+'''write EPROTO 1288491840640:error:100000f7:SSL routines:OPENSSL_internal:WRONG_VERSION_NUMBER:../../third_party/boringssl/src/ssl/tls_record.cc:127:'''
+This error is ssl error
+For this one we need to put http instead of https
