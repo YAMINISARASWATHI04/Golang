@@ -1,0 +1,14 @@
+Engine in ginframeworks in central hub for webserver
+FUNCTIONS:
+    ->HTTP routing: Handles incoming requests
+    ->It maintains a middleware functions for logging,authentication,etc
+    ->It has direct function to start http server
+
+Using context.JSON we can send the response without using any return function
+
+Http.StatusOK returns the status numbers
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status
+Above link contains all the status codes
+
+API Endpoints are set of protocols which defines how a client can request data to server 
+Endpoints are accessed using HTTP methods like PUT,POST,GET.These methodsn indicate what actions the client is going to take
