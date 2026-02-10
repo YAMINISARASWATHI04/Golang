@@ -1,10 +1,12 @@
 package main
 
 import (
+	"RestApiProject/models"
 	"fmt"
 	"net/http"
-	"RestApiProject/models"
+	// "strconv"
 	"time"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,6 +16,7 @@ func main() {
 	// Handler for GET request to the root path
 	server.GET("/blog", getBlog) // This is an endpoint for GET request
 	server.POST("/blog", createBlog)
+	// server.GET("blog/id", getBlogByID)
 	// server.GET("/blog", getBlog)
 	server.Run(":8080") // listen and serve on
 }
@@ -27,8 +30,15 @@ func getBlog(context *gin.Context) { //context parameter will be set by gin and 
 	context.JSON(http.StatusOK, blogs) // To send the response
 	// gin.H is a shortcut for map[string]interface{} which is a map with string keys and values
 }
+
+
+	
+
+// }
 func createBlog(context *gin.Context) {
 	var blog models.Blog
+	
+
 	err := context.ShouldBindJSON(&blog) // This will mostly work as scan functions
 	// we need to pass a pointer to the blog to modify data in the blog variable
 	if err != nil {
@@ -38,12 +48,21 @@ func createBlog(context *gin.Context) {
 		})
 		return
 	}
-	blog.ID = len(models.GetAllBlogs()) + 1
+	blogs :=models.GetAllBlogs()
+	blog.ID = len(blogs) + 1
 
 	blog.CreatedAt = time.Now()
 	blog.UpdatedAt = time.Now()
 
-	blog.Save()
+	if err := models.SaveBlogs(blog); err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "failed to save blog",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	
 	context.JSON(http.StatusCreated, gin.H{"message": "Blog created successfully", "blog": blog})
 
 }
