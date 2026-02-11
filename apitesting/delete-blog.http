@@ -1,1 +1,1 @@
-DELETE http://localhost:8080/blog/5
+DELETE http://localhost:3000/blog/

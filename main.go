@@ -4,10 +4,9 @@ import (
 	"RestApiProject/models"
 	"fmt"
 	"net/http"
-	"strconv"
 	"time"
-
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func main() {
@@ -18,8 +17,10 @@ func main() {
 	server.POST("/blog", createBlog)
 	server.GET("/blog/:id", getBlogbyId)
 	server.DELETE("/blog/:id", deleteBlog)
+	server.GET("/blog/count", NumbeofBlogs)
+	server.PUT("/blog/:id", updateBlog)	
 	// server.GET("/blog", getBlog)
-	server.Run(":8080") // listen and serve on
+	server.Run(":3000") // listen and serve on
 }
 
 // In this gin.Context already has request and response objects
@@ -44,8 +45,8 @@ func createBlog(context *gin.Context) {
 		})
 		return
 	}
-	blogs := models.GetAllBlogs()
-	blog.ID = len(blogs) + 1
+	// blogs := models.GetAllBlogs()
+	blog.ID = uuid.New().String()
 
 	blog.CreatedAt = time.Now()
 	blog.UpdatedAt = time.Now()
@@ -61,18 +62,15 @@ func createBlog(context *gin.Context) {
 	context.JSON(http.StatusCreated, gin.H{"message": "Blog created successfully", "blog": blog})
 
 }
+func NumbeofBlogs(context *gin.Context) {
+	blogs := models.GetAllBlogs()
+	context.JSON(http.StatusOK, gin.H{"number_of_blogs": len(blogs)})
+
+}
 
 func getBlogbyId(context *gin.Context) {
-	idParam := context.Param("id")
+	id := context.Param("id")
 
-	id, err := strconv.Atoi(idParam)
-	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{
-			"message": "invalid blog id",
-			"error":   err.Error(),
-		})
-		return
-	}
 	blog, err := models.GetBlogByID(id)
 	if err != nil {
 		context.JSON(http.StatusNotFound, gin.H{
@@ -85,17 +83,9 @@ func getBlogbyId(context *gin.Context) {
 }
 
 func deleteBlog(context *gin.Context) {
-	idParam := context.Param("id")
+	id := context.Param("id")
 
-	id, err := strconv.Atoi(idParam)
-	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{
-			"message": "invalid blog id",
-			"error":   err.Error(),
-		})
-		return
-	}
-	err = models.DeleteBlogByID(id)
+	err := models.DeleteBlogByID(id)
 	if err != nil {
 		context.JSON(http.StatusNotFound, gin.H{
 			"message": "blog not found",
@@ -104,4 +94,28 @@ func deleteBlog(context *gin.Context) {
 		return
 	}
 	context.JSON(http.StatusOK, gin.H{"message": "Blog deleted successfully"})
+}
+
+func updateBlog(context *gin.Context) {
+	id := context.Param("id")
+
+	var updatedBlog models.Blog
+	err := context.ShouldBindJSON(&updatedBlog)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"message": "couldnt parse request",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	err = models.UpdateBlogByID(id, updatedBlog)
+	if err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "blog not found",
+			"error":   err.Error(),
+		})
+		return
+	}
+	context.JSON(http.StatusOK, gin.H{"message": "Blog updated successfully"})			
 }

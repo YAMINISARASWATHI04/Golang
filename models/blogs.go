@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	
 	"os"
 	"time"
 )
 
 type Blog struct {
-	ID        int       `json:"id"`
+	ID        string    `json:"id"`
 	Author    string    `json:"author"` // struct tags we need to mention for the one which is important
 	Title     string    `json:"title"`
 	Content   string    `json:"content"`
@@ -53,7 +53,7 @@ func GetAllBlogs() []Blog {
 }
 
 func readBlogsFromFile() ([]Blog, error) {
-	blogs, err := ioutil.ReadFile(blogfile)
+	blogs, err := os.ReadFile(blogfile)
 	if err != nil {
 		fmt.Println("Error reading file:", err)
 
@@ -72,7 +72,7 @@ func readBlogsFromFile() ([]Blog, error) {
 
 }
 
-func GetBlogByID(id int) (*Blog, error) {
+func GetBlogByID(id string) (*Blog, error) {
 	blogs, err := readBlogsFromFile()
 	if err != nil {
 		return nil, fmt.Errorf("Error reading blogs from file: %v", err)
@@ -85,13 +85,13 @@ func GetBlogByID(id int) (*Blog, error) {
 	return nil, errors.New("blog not found")
 }
 
-func DeleteBlogByID(id int) error {
+func DeleteBlogByID(id string) error {
 	blogs, err := readBlogsFromFile()
-
 	if err != nil {
 		return fmt.Errorf("Error reading blogs from file: %w", err)
 	}
-	exist := false // Flag to check if the blog with the specified ID exists
+	
+	exist := false
 
 	for i := range blogs {
 		if blogs[i].ID == id {
@@ -101,13 +101,39 @@ func DeleteBlogByID(id int) error {
 
 		}
 	}
+	if !exist {
+		return errors.New("blog not found")
+	}	
 
+	
+	blogdata, err := json.MarshalIndent(blogs, "", " ") // Marshal the updated slice of blogs into JSON formatted bytes
+	if err != nil {
+		return fmt.Errorf("Error marshaling data: %v", err)
+	}
+	return os.WriteFile(blogfile, blogdata, 0644) // Write the updated JSON data back to the file
+
+}
+
+func UpdateBlogByID(id string, updatedBlog Blog) error {
+	blogs, err := readBlogsFromFile()
+	if err != nil {
+		return fmt.Errorf("Error reading blogs from file: %v", err)
+	}
+	exist := false
+	for i := range blogs {
+		if blogs[i].ID == id {
+			updatedBlog.ID = id
+			updatedBlog.CreatedAt = blogs[i].CreatedAt
+			updatedBlog.UpdatedAt = time.Now()
+			blogs[i] = updatedBlog // Update the blog with the new data
+			exist = true
+			break
+		}
+	}
 	if !exist {
 		return errors.New("blog not found")
 	}
-	for i := range blogs {
-		blogs[i].ID = i + 1
-	}
+
 	blogdata, err := json.MarshalIndent(blogs, "", " ") // Marshal the updated slice of blogs into JSON formatted bytes
 	if err != nil {
 		return fmt.Errorf("Error marshaling data: %v", err)

@@ -1,10 +1,10 @@
-POST http://localhost:8080/blog
+POST http://localhost:3000/blog
 Content-Type: application/json
 
 {
     
   "author": "Ishu",
-  "title": "Tulja Bhavani",
-  "content": "Famous temple in Maharashtra"
+  "title": "Amma",
+  "content": " Story of Mothers sacrifises"
 }
 

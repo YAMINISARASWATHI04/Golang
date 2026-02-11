@@ -1,18 +1,58 @@
 [
  {
-  "id": 1,
-  "author": "Yaminisaraswathi",
-  "title": "Amma diary lo konni pagilu",
-  "content": "Pure love of a mother",
-  "created_at": "2026-02-10T19:57:27.648149+05:30",
-  "updated_at": "2026-02-10T19:57:27.648149+05:30"
+  "id": "ea4d4816-000b-47eb-acc1-0a4ab1fc2003",
+  "author": "Yamu",
+  "title": "My Life",
+  "content": "This is the content of my life blog.",
+  "created_at": "2026-02-11T14:57:47.570366+05:30",
+  "updated_at": "2026-02-11T14:57:47.570366+05:30"
  },
  {
-  "id": 2,
+  "id": "73093396-bc89-4f99-8482-21687d864116",
   "author": "Ishu",
-  "title": "Tulja Bhavani",
-  "content": "Famous temple in Maharashtra",
-  "created_at": "2026-02-11T10:43:22.925863+05:30",
-  "updated_at": "2026-02-11T10:43:22.925863+05:30"
+  "title": "Amma diary lo konnni pagilu",
+  "content": "Describes pure love of a mother to their child and how they are always there for their children in all the ups and downs of life.",
+  "created_at": "2026-02-11T14:58:59.303536+05:30",
+  "updated_at": "2026-02-11T14:58:59.303536+05:30"
+ },
+ {
+  "id": "fbe2f014-4256-4042-bb3c-55690c3c8354",
+  "author": "Yamini Saraswathi",
+  "title": "Naa jeevitham",
+  "content": " Autobiography of my life",
+  "created_at": "2026-02-11T15:00:16.6691+05:30",
+  "updated_at": "2026-02-11T15:00:16.669101+05:30"
+ },
+ {
+  "id": "ee5367e9-12fb-4daf-9df2-28eef906cb55",
+  "author": "Chinni",
+  "title": " Chadarangam",
+  "content": " Describes how life is similar to chess",
+  "created_at": "2026-02-11T15:04:53.283118+05:30",
+  "updated_at": "2026-02-11T15:04:53.283118+05:30"
+ },
+ {
+  "id": "e602bbe0-90a1-49cc-a9e8-4c854ef5cd5c",
+  "author": "Laxmi Bai",
+  "title": "My Mother",
+  "content": "It is my mothers story",
+  "created_at": "2026-02-11T15:06:13.11685+05:30",
+  "updated_at": "2026-02-11T15:29:13.563915+05:30"
+ },
+ {
+  "id": "7fa88462-2258-4c96-a5f9-43c5785adf93",
+  "author": "Varsha",
+  "title": " Game of life",
+  "content": " Destiny 's game that describes life and its challenges",
+  "created_at": "2026-02-11T15:08:41.090084+05:30",
+  "updated_at": "2026-02-11T15:08:41.090084+05:30"
+ },
+ {
+  "id": "7c286490-063e-4fb3-beb6-db61ec0510e9",
+  "author": "Ishu",
+  "title": "Amma",
+  "content": " Story of Mothers sacrifises",
+  "created_at": "2026-02-11T15:17:55.731011+05:30",
+  "updated_at": "2026-02-11T15:17:55.731011+05:30"
  }
 ]
