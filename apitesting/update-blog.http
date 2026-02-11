@@ -1,0 +1,10 @@
+PUT http://localhost:3000/blog/7c286490-063e-4fb3-beb6-db61ec0510e9
+Content-Type: application/json
+
+{
+    
+  "author": "Aishu",
+  "title": "Amma",
+  "content": " Story of Mothers sacrifises"
+}
+

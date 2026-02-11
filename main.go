@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -18,7 +19,7 @@ func main() {
 	server.GET("/blog/:id", getBlogbyId)
 	server.DELETE("/blog/:id", deleteBlog)
 	server.GET("/blog/count", NumbeofBlogs)
-	server.PUT("/blog/:id", updateBlog)	
+	server.PUT("/blog/:id", updateBlog)
 	// server.GET("/blog", getBlog)
 	server.Run(":3000") // listen and serve on
 }
@@ -117,5 +118,5 @@ func updateBlog(context *gin.Context) {
 		})
 		return
 	}
-	context.JSON(http.StatusOK, gin.H{"message": "Blog updated successfully"})			
+	context.JSON(http.StatusOK, gin.H{"message": "Blog updated successfully", "blog": updatedBlog})
 }
