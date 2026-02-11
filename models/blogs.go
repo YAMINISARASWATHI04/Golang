@@ -23,7 +23,7 @@ const blogfile = "blogs.json"
 
 func SaveBlogs(blog Blog) error {
 
-	blogs,err := readBlogsFromFile()
+	blogs, err := readBlogsFromFile()
 	if err != nil {
 		return fmt.Errorf("Error reading blogs from file: %v", err)
 	}
@@ -35,16 +35,15 @@ func SaveBlogs(blog Blog) error {
 	if err != nil {
 		return fmt.Errorf("Error marshaling data: %v", err)
 	}
-	return os.WriteFile(blogfile,blogdata,0644)
+	return os.WriteFile(blogfile, blogdata, 0644)
 	// Write the JSON data to the file, creating it if it doesn't exist (0644 is standard permissions)
-	
 
 }
 
 // Its just a function not a method
-func GetAllBlogs() ([]Blog) {
+func GetAllBlogs() []Blog {
 
-	blogs ,err:= readBlogsFromFile()
+	blogs, err := readBlogsFromFile()
 	if err != nil {
 		fmt.Println("Error reading blogs from file:", err)
 		return []Blog{}
@@ -53,13 +52,13 @@ func GetAllBlogs() ([]Blog) {
 
 }
 
-func readBlogsFromFile() ([]Blog,error) {
+func readBlogsFromFile() ([]Blog, error) {
 	blogs, err := ioutil.ReadFile(blogfile)
 	if err != nil {
 		fmt.Println("Error reading file:", err)
 
 		if errors.Is(err, os.ErrNotExist) {
-			return []Blog{} ,nil// Return an empty slice if the file doesn't exist
+			return []Blog{}, nil // Return an empty slice if the file doesn't exist
 		}
 		return nil, fmt.Errorf("Error reading file: %v", err)
 	}
@@ -69,6 +68,50 @@ func readBlogsFromFile() ([]Blog,error) {
 	if err != nil {
 		return nil, fmt.Errorf("Error unmarshaling data: %v", err)
 	}
-	return blogList,nil
+	return blogList, nil
+
+}
+
+func GetBlogByID(id int) (*Blog, error) {
+	blogs, err := readBlogsFromFile()
+	if err != nil {
+		return nil, fmt.Errorf("Error reading blogs from file: %v", err)
+	}
+	for i := range blogs {
+		if blogs[i].ID == id {
+			return &blogs[i], nil
+		}
+	}
+	return nil, errors.New("blog not found")
+}
+
+func DeleteBlogByID(id int) error {
+	blogs, err := readBlogsFromFile()
+
+	if err != nil {
+		return fmt.Errorf("Error reading blogs from file: %w", err)
+	}
+	exist := false // Flag to check if the blog with the specified ID exists
+
+	for i := range blogs {
+		if blogs[i].ID == id {
+			blogs = append(blogs[:i], blogs[i+1:]...) // Remove the blog with the specified ID
+			exist = true
+			break
+
+		}
+	}
+
+	if !exist {
+		return errors.New("blog not found")
+	}
+	for i := range blogs {
+		blogs[i].ID = i + 1
+	}
+	blogdata, err := json.MarshalIndent(blogs, "", " ") // Marshal the updated slice of blogs into JSON formatted bytes
+	if err != nil {
+		return fmt.Errorf("Error marshaling data: %v", err)
+	}
+	return os.WriteFile(blogfile, blogdata, 0644) // Write the updated JSON data back to the file
 
 }
