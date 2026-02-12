@@ -29,6 +29,8 @@ func SaveBlogs(blog Blog) error {
 	}
 	blogs = append(blogs, blog) // Append the new blog to the existing slice of blogs
 
+	
+
 	// Marshal means converts the struct into json format and then we can write it to the file
 
 	blogdata, err := json.MarshalIndent(blogs, "", " ") // Marshal the slice of structs into JSON formatted bytes

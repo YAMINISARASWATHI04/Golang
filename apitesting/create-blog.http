@@ -2,9 +2,8 @@ POST http://localhost:3000/blog
 Content-Type: application/json
 
 {
-    
-  "author": "Ishu",
-  "title": "Amma",
-  "content": " Story of Mothers sacrifises"
+  
+  "title": "Story",
+  "content": "Katha"
 }
 

@@ -1,58 +1,42 @@
 [
  {
-  "id": "ea4d4816-000b-47eb-acc1-0a4ab1fc2003",
-  "author": "Yamu",
-  "title": "My Life",
-  "content": "This is the content of my life blog.",
-  "created_at": "2026-02-11T14:57:47.570366+05:30",
-  "updated_at": "2026-02-11T14:57:47.570366+05:30"
- },
- {
-  "id": "73093396-bc89-4f99-8482-21687d864116",
-  "author": "Ishu",
-  "title": "Amma diary lo konnni pagilu",
-  "content": "Describes pure love of a mother to their child and how they are always there for their children in all the ups and downs of life.",
-  "created_at": "2026-02-11T14:58:59.303536+05:30",
-  "updated_at": "2026-02-11T14:58:59.303536+05:30"
- },
- {
-  "id": "fbe2f014-4256-4042-bb3c-55690c3c8354",
-  "author": "Yamini Saraswathi",
-  "title": "Naa jeevitham",
-  "content": " Autobiography of my life",
-  "created_at": "2026-02-11T15:00:16.6691+05:30",
-  "updated_at": "2026-02-11T15:00:16.669101+05:30"
- },
- {
-  "id": "ee5367e9-12fb-4daf-9df2-28eef906cb55",
-  "author": "Chinni",
-  "title": " Chadarangam",
-  "content": " Describes how life is similar to chess",
-  "created_at": "2026-02-11T15:04:53.283118+05:30",
-  "updated_at": "2026-02-11T15:04:53.283118+05:30"
- },
- {
-  "id": "e602bbe0-90a1-49cc-a9e8-4c854ef5cd5c",
-  "author": "Mahendraker Yamini Saraswathi",
-  "title": "Story Of mine",
-  "content": " Autobiography",
-  "created_at": "2026-02-11T15:06:13.11685+05:30",
-  "updated_at": "2026-02-11T21:37:29.636038+05:30"
- },
- {
-  "id": "7fa88462-2258-4c96-a5f9-43c5785adf93",
-  "author": "Varsha",
-  "title": " Game of life",
-  "content": " Destiny 's game that describes life and its challenges",
-  "created_at": "2026-02-11T15:08:41.090084+05:30",
-  "updated_at": "2026-02-11T15:08:41.090084+05:30"
- },
- {
-  "id": "7c286490-063e-4fb3-beb6-db61ec0510e9",
+  "id": "c50c2ba0-0c8d-4df8-83a1-73450629cd22",
   "author": "Aishu",
   "title": "Amma",
   "content": " Story of Mothers sacrifises",
-  "created_at": "2026-02-11T15:17:55.731011+05:30",
-  "updated_at": "2026-02-11T21:42:05.175395+05:30"
+  "created_at": "2026-02-12T11:57:14.365983+05:30",
+  "updated_at": "2026-02-12T12:00:29.178677+05:30"
+ },
+ {
+  "id": "bbfaf62c-9bb8-4aab-9f40-161689a7b725",
+  "author": "Yamini",
+  "title": "Life of a girl",
+  "content": " Journey of a 10yr old girl",
+  "created_at": "2026-02-12T12:06:32.256703+05:30",
+  "updated_at": "2026-02-12T12:06:32.256703+05:30"
+ },
+ {
+  "id": "79c01c97-bf13-4ca9-aa16-200541561457",
+  "author": "",
+  "title": "Life of a girl",
+  "content": " Journey of a 10yr old girl",
+  "created_at": "2026-02-12T12:18:25.951538+05:30",
+  "updated_at": "2026-02-12T12:18:25.951538+05:30"
+ },
+ {
+  "id": "2b3fd774-035d-4c2c-b2dd-f3ad0dbfb059",
+  "author": "Yamini saraswathi",
+  "title": "Chadarangam",
+  "content": "How journey of life is compared to chess",
+  "created_at": "2026-02-12T13:19:17.445757+05:30",
+  "updated_at": "2026-02-12T13:19:17.445757+05:30"
+ },
+ {
+  "id": "2cf5c876-da49-4f09-8189-702b5b6fb7db",
+  "author": "",
+  "title": "Chadarangam",
+  "content": "How journey of life is compared to chess",
+  "created_at": "2026-02-12T13:19:25.976162+05:30",
+  "updated_at": "2026-02-12T13:19:25.976162+05:30"
  }
 ]
