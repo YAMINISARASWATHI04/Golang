@@ -40,8 +40,8 @@ func createBlog(context *gin.Context) {
 	err := context.ShouldBindJSON(&blog) // parse the JSON data from an HTTP request body and bind it to a Go struct or object, validating the data based on struct tags in the process
 	// we need to pass a pointer to the blog to modify data in the blog variable
 
-	if (blog.Author==" " || blog.Title==" " || blog.Content==" "){
-		context.JSON(http.StatusBadRequest,gin.H{"message":"Please fill all the fields"})
+	if blog.Author == " " || blog.Title == " " || blog.Content == " " {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Please fill all the fields"})
 	}
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
@@ -50,8 +50,8 @@ func createBlog(context *gin.Context) {
 		})
 		return
 	}
-	if (blog.Author=="" || blog.Title=="" || blog.Content==""){
-		context.JSON(http.StatusBadRequest,gin.H{"message":"Please fill all the fields"})
+	if blog.Author == "" || blog.Title == "" || blog.Content == "" {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Please fill all the fields"})
 		return
 	}
 	// blogs := models.GetAllBlogs()
@@ -110,6 +110,11 @@ func updateBlog(context *gin.Context) {
 
 	var updatedBlog models.Blog
 	err := context.ShouldBindJSON(&updatedBlog)
+
+	if updatedBlog.Author == "" || updatedBlog.Title == "" || updatedBlog.Content == "" {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Please fill all the fields"})
+		return
+	}
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
 			"message": "couldnt parse request",
