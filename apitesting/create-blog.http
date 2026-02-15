@@ -2,8 +2,8 @@ POST http://localhost:3000/blog
 Content-Type: application/json
 
 {
-  "author":"Chinni",
-  "title": "Story",
-  "content": "Katha"
+  "author":"Yamini",
+  "title": "Biography",
+  "content": "Story of a person"
 }
 

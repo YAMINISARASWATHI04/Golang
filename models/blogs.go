@@ -42,6 +42,8 @@ func SaveBlogs(blog Blog) error {
 
 }
 
+
+
 // Its just a function not a method
 func GetAllBlogs() []Blog {
 

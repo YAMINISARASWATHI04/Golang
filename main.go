@@ -1,6 +1,7 @@
 package main
 
 import (
+	"RestApiProject/db"
 	"RestApiProject/models"
 	"fmt"
 	"net/http"
@@ -12,6 +13,7 @@ import (
 
 func main() {
 	fmt.Println("Hello, World!")
+	db.InitDB() // To initialize the database connection and create the necessary tables if they do not exist
 	server := gin.Default() // It will setup an engine for us and return it. The default engine is a Logger and Recovery middleware already attached.
 	// Handler for GET request to the root path
 	server.GET("/blog", getBlog) // This is an endpoint for GET request
@@ -29,7 +31,14 @@ func getBlog(context *gin.Context) { //context parameter will be set by gin and 
 	// Reach out to a database
 	// Write in a file
 	// Make an API call to another service
-	blogs := models.GetAllBlogs()
+	blogs ,err := models.GetBlogs()
+	if err != nil {		
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "failed to get blogs",
+			"error":   err.Error(),
+		})
+		return
+	}
 	context.JSON(http.StatusOK, blogs) // To send the response
 	// gin.H is a shortcut for map[string]interface{} which is a map with string keys and values
 }
@@ -60,7 +69,7 @@ func createBlog(context *gin.Context) {
 	blog.CreatedAt = time.Now()
 	blog.UpdatedAt = time.Now()
 
-	if err := models.SaveBlogs(blog); err != nil {
+	if err := models.SavetheBlogs(blog); err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"message": "failed to save blog",
 			"error":   err.Error(),
@@ -68,7 +77,7 @@ func createBlog(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusCreated, gin.H{"message": "Blog created successfully", "blog": blog})
+	context.JSON(http.StatusCreated, gin.H{ "blog": blog})
 
 }
 func NumbeofBlogs(context *gin.Context) {
@@ -131,5 +140,5 @@ func updateBlog(context *gin.Context) {
 		})
 		return
 	}
-	context.JSON(http.StatusOK, gin.H{"message": "Blog updated successfully", "blog": updatedBlog})
+	context.JSON(http.StatusOK, gin.H{ "blog": updatedBlog})
 }
