@@ -14,9 +14,8 @@ import (
 
 
 func SavetheBlogs(blog Blog) error  {
-	query := `INSERT INTO blogs (id, author, title, content, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)` // Question marks are placeholders and protect us from SQL injection attacks by ensuring that user input is treated as data rather than executable code. The database driver will safely escape the values before executing the query.
-	stmt,err := db.DB.Prepare(query) // To prepare the SQL statement for execution. It returns a prepared statement that can be executed multiple times with different parameters.
-	// when we use prepare it stores in memory and we can execute it multiple times with different parameters which will improve the performance of our application by reducing the time taken to parse and compile the SQL statement for each execution.
+	query := `INSERT INTO blogs (id, author, title, content, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)` // Question marks are placeholders and protect us from SQL injection attacks by ensuring that user input is treated as data rather than executable code. The database driver will safely escape the values before executing the query.
+	stmt,err := db.DB.Prepare(query) 
 	if err!=nil{
 		return err
 	}
@@ -24,13 +23,13 @@ func SavetheBlogs(blog Blog) error  {
 	if err!=nil{
 		return err
 	}
-	// To generate a unique identifier for the blog post using the UUID package. This ensures that each blog post has a unique ID, which can be used to retrieve, update, or delete the post later.
+	
 
 	defer stmt.Close()
 	return nil
 }
 func GetBlogs() ([]Blog, error) {
-	query := `SELECT * FROM blogs` // To retrieve all blog posts from the database. It selects the relevant columns from the blogs table.
+	query := `SELECT * FROM blogs` 
 	rows, err := db.DB.Query(query) // To execute the SQL query and return the result set as rows. It returns a sql.Rows object that can be iterated over to access each row of data.
 	if err != nil {
 		fmt.Println("Error executing query:", err)
@@ -51,4 +50,57 @@ func GetBlogs() ([]Blog, error) {
 	
 	
 	return blogs,nil
+}
+
+func GetSingleBlogByID(id string) (Blog, error) {
+	query := `SELECT * FROM blogs WHERE id = $1` 
+	row := db.DB.QueryRow(query, id)  
+	var blog Blog
+	err := row.Scan(&blog.ID, &blog.Author, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt) // To read the values from the retrieved row into the fields of the blog struct. The Scan method takes pointers to the fields of the struct and populates them with the corresponding values from the row.
+	if err != nil {
+		fmt.Println("Error scanning row:", err)
+		return Blog{}, err
+	}
+	return blog, nil
+}	
+
+func UpdateTheBlogByID(id string, updatedBlog Blog) error {
+	query := `UPDATE blogs SET author = $2, title = $3, content = $4, updated_at = $5 WHERE id = $1` 
+	stmt, err := db.DB.Prepare(query) // To prepare the SQL statement for execution. It returns a prepared statement that can be executed multiple times with different parameters.
+	if err != nil {
+		return err
+	}
+	result, err := stmt.Exec(id,updatedBlog.Author, updatedBlog.Title, updatedBlog.Content, updatedBlog.UpdatedAt) // To execute the prepared statement with the provided parameters. It will update the corresponding row in the blogs table with the new values from the updatedBlog struct where the ID matches.
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return fmt.Errorf("no blog found with id %s", id)
+	}
+	if err!= nil {
+		return err
+	}
+	defer stmt.Close()
+	return nil
+}
+
+func DeleteBlog(id string) error{
+	query := "DELETE FROM BLOGS WHERE ID=$1"
+
+	stmt,err:=db.DB.Prepare(query)
+
+	if (err!=nil){
+		return err 
+	}
+
+	defer stmt.Close()
+
+	_ ,err =stmt.Exec(id)
+
+	return err
+
+
+
 }

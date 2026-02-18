@@ -16,6 +16,12 @@ Endpoints are accessed using HTTP methods like PUT,POST,GET.These methodsn indic
 ShouldBindBodyWithJSON(&blog) -> gin will take a look at incoming request and save in that variable
 Clients need to data in the given format
 
+ShouldBindJSON -> parse the JSON data from an HTTP request body and bind it to a Go struct or object, validating the data based on struct tags in the process
+	// we need to pass a pointer to the blog to modify data in the blog variable
+
+In the Gin web framework, the c.ShouldBindJSON() function is used to parse an incoming HTTP request body 
+that contains JSON data and bind it to a Go struct or map,
+
 
 '''write EPROTO 1288491840640:error:100000f7:SSL routines:OPENSSL_internal:WRONG_VERSION_NUMBER:../../third_party/boringssl/src/ssl/tls_record.cc:127:'''
 This error is ssl error
@@ -34,3 +40,24 @@ sql.Open()
 ->Open may just validate its arguments without creating a connection to the database. To verify that the data source name is valid, call [DB.Ping].
 
 ->The returned [DB] is safe for concurrent use by multiple goroutines and maintains its own pool of idle connections. Thus, the Open function should be called just once. It is rarely necessary to close a [DB].
+
+Exec () -> It is used to run sql queries and it returns an integer value used for dml statements such as insert, update and delete
+
+Query() -> It is used to retrive data from database 
+
+Context.Background() ->When a new request arrives at a server, context.Background() can be used to create the initial, top-level context from which all request-specific contexts (with timeouts, cancellation, or values) are derived.
+ 
+Prepare()- To prepare the SQL statement for execution. It returns a prepared statement that can be executed multiple times with different parameters.
+ when we use prepare it stores in memory and we can execute it multiple times with different parameters which will improve the performance of our application by reducing the time taken to parse and compile the SQL statement for each execution.
+
+// gin.H is a shortcut for map[string]interface{} which is a map with string keys and values
+
+gin.context -//context parameter will be set by gin and will be pointer to gin
+	// Reach out to a database
+	// Write in a file
+	// Make an API call to another service
+
+/ gin helps us to recover from panics and return a 500 Internal Server Error response to the client instead of crashing the server
+	DB.SetMaxOpenConns(10) // To confgure connection pooling for better performance and resource management
+	// Connection pooling is a performance optimization technique that maintains a cache of active database connections, allowing them to be reused for multiple requests rather than creating a new connection each time
+	// when we open this it controls how many connections can be open at a time to the database. By default, it is set to 0 which means unlimited connections. We can set it to a specific number to limit the number of connections that can be open at a time.

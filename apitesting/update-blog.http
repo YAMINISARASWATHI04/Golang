@@ -1,10 +1,11 @@
-PUT http://localhost:3000/blog/c50c2ba0-0c8d-4df8-83a1-73450629cd22
+PUT http://localhost:3000/blog/64342683-1a7c-4534-b007-b4f07b6fd5a0
 Content-Type: application/json
 
 {
     
-  "author":"Ishu",
-  //"title": "Amma",
-  "content": " Story of Mothers sacrifises"
+  "author":"Chitti",
+  "Title": "Ajamma",  
+  
+  "content": "Nice Name"
 }
 
