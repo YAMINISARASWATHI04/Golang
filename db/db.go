@@ -30,12 +30,11 @@ func InitDB(){ // To initialize the database connection and create the necessary
 		panic("database not reachable") // FOrces the application to attempt to connect to the database and verify that it is reachable. If the connection cannot be established, it will return an error which we can handle appropriately (in this case, we panic and print the error message)
 	}
 
-
 	CREATE_TABLES()
 }
 
 func Connection() (*pgx.Conn, error) {
-    conn, err := pgx.Connect(context.Background(), "postgres://postgres:Yadamma@2004@localhost:5432/mydb?sslmode=disable")
+    conn, err := pgx.Connect(context.Background(), "postgres://postgres:Yadamma%402004@localhost:5432/mydb?sslmode=disable")
     if err != nil {
         return nil, err
     }

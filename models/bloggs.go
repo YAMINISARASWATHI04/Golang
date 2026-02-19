@@ -79,9 +79,7 @@ func UpdateTheBlogByID(id string, updatedBlog Blog) error {
 	if rowsAffected == 0 {
 		return fmt.Errorf("no blog found with id %s", id)
 	}
-	if err!= nil {
-		return err
-	}
+
 	defer stmt.Close()
 	return nil
 }
