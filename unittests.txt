@@ -1,0 +1,31 @@
+Create (Add)
+Successful Creation:
+Test adding a valid entity and verify it is assigned a unique ID.
+Retrieve the newly created entity immediately after insertion and confirm all properties match the initial data.
+Error Handling and Validation:
+Test adding an entity with missing required fields or invalid data (e.g., a title exceeding max length) and verify that the operation fails gracefully and returns an appropriate error (e.g., BadRequest or validation error).
+Test attempting to create a duplicate record if unique constraints are in place. 
+
+Read (Retrieve)
+Successful Retrieval:
+Test retrieving an existing entity by its ID and verify that the correct item is returned and is not null.
+Test retrieving all entities (e.g., a "GetAll" method) and verify that the count and contents of the returned list are correct.
+Error Handling:
+Test retrieving a non-existent ID and verify that an appropriate error is returned (e.g., NotFound or null object).
+Test retrieving data with a null or invalid ID/parameter (e.g., a negative ID) and verify it returns a BadRequest or similar error. 
+
+Update
+Successful Update:
+Test updating an existing entity with valid data and verify that the changes are persisted by retrieving the entity again and checking its properties.
+Error Handling and Validation:
+Test updating an entity with invalid data (e.g., invalid format for a field) and verify the update fails and returns an appropriate error.
+Test attempting to update a non-existent entity and verify it returns a NotFound error.
+Test updating an entity with an ID that does not match the ID in the request body, verifying it returns a BadRequest error. 
+
+Delete
+Successful Deletion:
+Test deleting an existing entity by its ID and verify it is no longer retrievable (e.g., subsequent attempts to retrieve it return NotFound or null).
+Verify the total count of records decreases by one after a successful deletion.
+Error Handling:
+Test attempting to delete a non-existent entity and verify it returns a NotFound error.
+Test attempting to delete an entity by passing a null or invalid ID and verify it returns a BadRequest error.

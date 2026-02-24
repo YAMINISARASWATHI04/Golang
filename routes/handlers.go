@@ -47,7 +47,7 @@ func createBlog(context *gin.Context) {
 	blog.CreatedAt = time.Now()
 	blog.UpdatedAt = time.Now()
 
-	if err := models.SavetheBlogs(blog); err != nil {
+	if blog,err = models.SavetheBlogs(blog); err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"message": "failed to save blog",
 			"error":   err.Error(),
@@ -59,7 +59,11 @@ func createBlog(context *gin.Context) {
 
 }
 func NumbeofBlogs(context *gin.Context) {
-	blogs := models.GetAllBlogs()
+	// var blog models.Blog
+	blogs ,err := models.GetBlogs()
+	if err!=nil {
+		return 
+	}
 	context.JSON(http.StatusOK, gin.H{"number_of_blogs": len(blogs)})
 
 }

@@ -1,4 +1,4 @@
-package db
+package models
 
 import (
 	"database/sql"
@@ -9,9 +9,32 @@ import (
 	"context"
     // "fmt"
     // "log"
+	// "github.com/alextanhongpin/dbtx"
+    _ "github.com/lib/pq"
 )
 
 var DB *sql.DB
+
+// type DBTX interface {
+// 	ExecContext(ctx context.Context, query string, args ...any) (sql.Result, error)
+// 	PrepareContext(ctx context.Context, query string) (*sql.Stmt, error)
+// 	QueryContext(ctx context.Context, query string, args ...any) (*sql.Rows, error)
+// 	QueryRowContext(ctx context.Context, query string, args ...any) *sql.Row
+// }
+
+// type Queries struct {
+//     DB DBTX
+// }
+
+// func New(DB DBTX) *Queries{
+// 	return &Queries{DB :DB}
+// }
+
+// func (q *Queries) withTx(tx *sql.Tx ) *Queries{
+// 	return &Queries{
+// 		DB: tx,
+// 	}
+// }
 
 // sql package doesnot contain database drivers we need to use thirdpparty libraries
 
@@ -38,8 +61,14 @@ func Connection() (*pgx.Conn, error) {
     if err != nil {
         return nil, err
     }
-    return conn, nil
+    
+    
+	return conn, nil
+
+
 }
+
+
 
 func CREATE_TABLES(){ 
 	// To create the necessary tables in the database if they do not exist
@@ -48,8 +77,8 @@ func CREATE_TABLES(){
 	author TEXT NOT NULL,
 	title TEXT NOT NULL,
 	content TEXT NOT NULL,
-	created_at TIMESTAMP NOT NULL,
-	updated_at TIMESTAMP	 NOT NULL
+	created_at TIMESTAMP DEFAULT now(),
+	updated_at TIMESTAMP DEFAULT now()
 );`
 	if DB == nil {
 		panic("DB is nil before Exec")

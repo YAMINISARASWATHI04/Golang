@@ -1,9 +1,9 @@
 package main
 
 import (
-	"RestApiProject/db"
+	// "RestApiProject/db"
 	"RestApiProject/routes"
-	// "RestApiProject/models"
+	"RestApiProject/models"
 	"fmt"
 	"os"
 	// "net/http"
@@ -17,7 +17,7 @@ import (
 
 func main() {
 	fmt.Println("Hello, World!")
-	conn,err :=db.Connection()
+	conn,err :=models.Connection()
 
 	if (err!=nil){
 		fmt.Fprintf(os.Stderr,"Unable to connect to databse",err)
@@ -25,7 +25,7 @@ func main() {
 
 	defer conn.Close(context.Background()) 
 
-	db.InitDB()
+	models.InitDB()
 	
     fmt.Println("Connection established succesfully")
 	server := gin.Default() // It will setup an engine for us and return it. The default engine is a Logger and Recovery middleware already attached.
