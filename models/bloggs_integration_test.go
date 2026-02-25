@@ -3,6 +3,7 @@ package models
 import (
 	// "context"
 	"RestApiProject/util"
+	
 	"database/sql"
 	"testing"
 	"time"
@@ -11,8 +12,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+var db *sql.DB
+
 func CreateBlog(t *testing.T) Blog {
-	setupTestDB()
+	db = setupTestDB(t)
 	arg := Blog{
 		ID:        uuid.New().String(),
 		Author:    util.RandomAuthor(),
@@ -22,7 +25,7 @@ func CreateBlog(t *testing.T) Blog {
 		UpdatedAt: time.Now().UTC(),
 	}
 
-	resblog, err := SavetheBlogs(arg)
+	resblog, err := SavetheBlogs(db,arg)
 	require.NoError(t, err)
 	require.NotEmpty(t, arg)
 
@@ -43,14 +46,14 @@ func CreateBlog(t *testing.T) Blog {
 	return resblog
 }
 
-func TestSavetheBlogs(t *testing.T) { // we will use T object to manage the test case
+func TestSavetheBlogsIntegration(t *testing.T) { // we will use T object to manage the test case
 	CreateBlog(t)
 
 }
 
-func TestGetBlogs(t *testing.T) {
+func TestGetBlogsIntegration(t *testing.T) {
 	blog1 := CreateBlog(t)
-	blogs, err := GetBlogs()
+	blogs, err := GetBlogs(db)
 	require.NoError(t, err)
 	require.NotEmpty(t, blogs)
 	var blog2 Blog
@@ -72,12 +75,12 @@ func TestGetBlogs(t *testing.T) {
 
 }
 
-func TestGetSingleBlogByID(t *testing.T) {
+func TestGetSingleBlogByIDIntegration(t *testing.T) {
 	blog1 := CreateBlog(t)
-	blog2, err := GetSingleBlogByID(blog1.ID)
+	blog2, err := GetSingleBlogByID(db,blog1.ID)
 
 	require.NoError(t, err)
-	require.NotEmpty(t, blog1)
+	require.NotEmpty(t, blog2)
 	require.Equal(t, blog1.ID, blog2.ID)
 	require.Equal(t, blog1.Author, blog2.Author)
 	require.Equal(t, blog1.Title, blog2.Title)
@@ -88,7 +91,7 @@ func TestGetSingleBlogByID(t *testing.T) {
 
 }
 
-func TestUpdateTheBlogByID(t *testing.T) {
+func TestUpdateTheBlogByIDIntegration(t *testing.T) {
 	blog1 := CreateBlog(t)
 
 	arg := Blog{
@@ -100,29 +103,33 @@ func TestUpdateTheBlogByID(t *testing.T) {
 		UpdatedAt: time.Now().UTC(),
 	}
 
-	err := UpdateTheBlogByID(arg.ID, arg)
+	err := UpdateTheBlogByID(db,arg.ID, arg)
 
 	require.NoError(t, err)
+
+	updatedBlog ,err :=GetSingleBlogByID(db,arg.ID)
+	require.NoError(t,err)
+
 	require.NotEmpty(t, blog1)
 	require.NotEmpty(t, arg)
-	require.Equal(t, blog1.ID, arg.ID)
-	require.Equal(t, blog1.Author, arg.Author)
-	require.Equal(t, blog1.Title, arg.Title)
-	require.Equal(t, blog1.Content, arg.Content)
-	require.NotZero(t, blog1.ID)
-	require.NotZero(t, arg.ID)
+	require.Equal(t, updatedBlog.ID, arg.ID)
+	require.Equal(t, updatedBlog.Author, arg.Author)
+	require.Equal(t, updatedBlog.Title, arg.Title)
+	require.Equal(t, updatedBlog.Content, arg.Content)
+	require.NotZero(t, updatedBlog.ID)
+	require.NotZero(t, updatedBlog.UpdatedAt)
 	//require.Equal(t, blog1.UpdatedAt, arg.UpdatedAt)
-	require.WithinDuration(t, blog1.CreatedAt, arg.CreatedAt, time.Second)
-	require.WithinDuration(t, blog1.UpdatedAt, arg.UpdatedAt, time.Second)
+	require.WithinDuration(t, updatedBlog.CreatedAt, arg.CreatedAt, time.Second)
+	require.WithinDuration(t, updatedBlog.UpdatedAt, arg.UpdatedAt, time.Second)
 
 }
 
-func TestDeleteBlog(t *testing.T) {
+func TestDeleteBlogIntegration(t *testing.T) {
 	blog1 := CreateBlog(t)
-	err := DeleteBlog(blog1.ID)
+	err := DeleteBlog(db,blog1.ID)
 	require.NoError(t, err)
 
-	blog2, err := GetSingleBlogByID(blog1.ID)
+	blog2, err := GetSingleBlogByID(db,blog1.ID)
 	require.Error(t, err)
 	require.EqualError(t, err, sql.ErrNoRows.Error())
 	require.Empty(t, blog2)

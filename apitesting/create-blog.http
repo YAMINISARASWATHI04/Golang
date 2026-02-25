@@ -2,8 +2,8 @@ POST http://localhost:3000/blog
 Content-Type: application/json
 
 {
-  "author":"abjdj",
-  "title": "Yamini",
-  "content": "Saraswathi"
+  "author":"Yamini",
+  "title": "Amma Diary lo konni pagilu",
+  "content": "Story of a mother "
   }
 

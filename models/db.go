@@ -15,26 +15,6 @@ import (
 
 var DB *sql.DB
 
-// type DBTX interface {
-// 	ExecContext(ctx context.Context, query string, args ...any) (sql.Result, error)
-// 	PrepareContext(ctx context.Context, query string) (*sql.Stmt, error)
-// 	QueryContext(ctx context.Context, query string, args ...any) (*sql.Rows, error)
-// 	QueryRowContext(ctx context.Context, query string, args ...any) *sql.Row
-// }
-
-// type Queries struct {
-//     DB DBTX
-// }
-
-// func New(DB DBTX) *Queries{
-// 	return &Queries{DB :DB}
-// }
-
-// func (q *Queries) withTx(tx *sql.Tx ) *Queries{
-// 	return &Queries{
-// 		DB: tx,
-// 	}
-// }
 
 // sql package doesnot contain database drivers we need to use thirdpparty libraries
 

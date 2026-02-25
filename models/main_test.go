@@ -1,35 +1,25 @@
-
-
 package models
 
 import (
 	"database/sql"
+	"testing"
+
 	// "testing"
 	// "time"
 
 	_ "github.com/lib/pq"
+	"github.com/stretchr/testify/require"
 )
 
-func setupTestDB() {
+func setupTestDB(t *testing.T) *sql.DB {
 	connStr := "postgres://postgres:Yadamma%402004@localhost:5432/mydb?sslmode=disable"
 
 	var err error
 	DB, err = sql.Open("postgres", connStr)
-	if err != nil {
-		panic(err)
-	}
+	require.NoError(t,err)
+	err=DB.Ping()
+	
+	return DB
 }
 
 
-// func TestDB(m *testing.M){
-// 	dbDriver :="postgres"
-// 	dbSource :="postgres://postgres:Yadamma%402004@localhost:5432/mydb?sslmode=disable"
-// 	conn,err :=sql.Open(dbDriver,dbSource)
-// 	if err!=nil{
-// 		panic(err)
-// 	}
-
-// 	os.Exit(m.Run()) 
-// 	// Run runs the tests. It returns an exit code to pass to os.Exit. The exit code is zero when all tests pass, and non-zero for any kind of failure.
-
-// }

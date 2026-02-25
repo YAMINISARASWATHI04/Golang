@@ -8,8 +8,9 @@ import (
 
 )
 
+// var db *sql
 func getBlog(context *gin.Context) { 
-	blogs ,err := models.GetBlogs()
+	blogs ,err := models.GetBlogs(models.DB)
 	if err != nil {		
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"message": "failed to get blogs",
@@ -47,7 +48,7 @@ func createBlog(context *gin.Context) {
 	blog.CreatedAt = time.Now()
 	blog.UpdatedAt = time.Now()
 
-	if blog,err = models.SavetheBlogs(blog); err != nil {
+	if blog,err = models.SavetheBlogs(models.DB,blog); err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"message": "failed to save blog",
 			"error":   err.Error(),
@@ -60,7 +61,7 @@ func createBlog(context *gin.Context) {
 }
 func NumbeofBlogs(context *gin.Context) {
 	// var blog models.Blog
-	blogs ,err := models.GetBlogs()
+	blogs ,err := models.GetBlogs(models.DB)
 	if err!=nil {
 		return 
 	}
@@ -71,7 +72,7 @@ func NumbeofBlogs(context *gin.Context) {
 func getBlogbyId(context *gin.Context) {
 	id := context.Param("id") // To extract the value of the id parameter from the URL path. The Param method takes the name of the parameter as an argument and returns its value as a string.
 
-	blog, err := models.GetSingleBlogByID(id)
+	blog, err := models.GetSingleBlogByID(models.DB,id)
 	if err != nil {
 		context.JSON(http.StatusNotFound, gin.H{
 			"message": "blog not found",
@@ -85,7 +86,7 @@ func getBlogbyId(context *gin.Context) {
 func deleteBlog(context *gin.Context) {
 	id := context.Param("id")
 
-	err := models.DeleteBlog(id)
+	err := models.DeleteBlog(models.DB,id)
 	if err != nil {
 		context.JSON(http.StatusNotFound, gin.H{
 			"message": "blog not found",
@@ -115,7 +116,7 @@ func updateBlog(context *gin.Context) {
 	}
 	updatedBlog.UpdatedAt = time.Now()
 
-	err = models.UpdateTheBlogByID(id, updatedBlog)
+	err = models.UpdateTheBlogByID(models.DB,id, updatedBlog)
 	if err != nil {
 		context.JSON(http.StatusNotFound, gin.H{
 			"message": "blog not found",
