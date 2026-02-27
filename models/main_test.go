@@ -18,6 +18,10 @@ func setupTestDB(t *testing.T) *sql.DB {
 	DB, err = sql.Open("postgres", connStr)
 	require.NoError(t,err)
 	err=DB.Ping()
+
+	t.Cleanup(func() {
+        DB.Close()
+    })
 	
 	return DB
 }

@@ -43,6 +43,11 @@ func CreateBlog(t *testing.T) Blog {
 	require.NotZero(t, resblog.ID)
 	require.NotZero(t, resblog.CreatedAt)
 	require.NotZero(t, resblog.UpdatedAt)
+	defer func() {
+		_, err := db.Exec("DELETE FROM blogs WHERE id = $1", arg.ID)
+		require.NoError(t, err)
+	}()
+
 	return resblog
 }
 
